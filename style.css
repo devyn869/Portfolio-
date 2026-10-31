@@ -15,6 +15,8 @@ body {
   margin-bottom: 20px;
   padding: 15px;
   border: 1px solid #e0e0e0;
+  font-family: 'Shadows Into Light', cursive; /* Add this line */
+}
 }
 
 /* 3. Class Selector */
@@ -23,4 +25,6 @@ body {
   margin: 20px 0;
   padding: 20px;
   border: 2px solid #007bff;
+  font-family: 'Shadows Into Light', cursive; /* Add this line */
+}
 }
