@@ -1,3 +1,8 @@
+.shadows-into-light-regular {
+  font-family: "Shadows Into Light", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
 /* 1. Type Selector */
 body {
   background-color: #f5f5f5;
