@@ -10,7 +10,9 @@ body {
   font-family: 'Shadows Into Light', cursive;
 } /* <-- Just one closing bracket here */
 
-/* 2. ID Selector */
+#main-header {
+  font-size: 2rem;
+}
 #main-header {
   background-color: #ffffff;
   margin-bottom: 20px;
@@ -18,8 +20,9 @@ body {
   border: 1px solid #e0e0e0;
   font-family: 'Shadows Into Light', cursive;
 }
-
-/* 3. Class Selector */
+* {
+  box-sizing: border-box;
+}
 .card {
   background-color: #ffffff;
   margin: 20px 0;
