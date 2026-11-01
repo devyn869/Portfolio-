@@ -13,6 +13,11 @@ body {
 #main-header {
   font-size: 2rem;
 }
+.card-wrapper {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
 #main-header {
   background-color: #ffffff;
   margin-bottom: 24px;
