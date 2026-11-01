@@ -5,7 +5,7 @@ body {
   background-color: #f5f5f5;
   color: #333333;
   margin: 0;
-  padding: 20px;
+  padding: 24px;
   border: 0;
   font-family: 'Shadows Into Light', cursive;
 } /* <-- Just one closing bracket here */
@@ -15,8 +15,8 @@ body {
 }
 #main-header {
   background-color: #ffffff;
-  margin-bottom: 20px;
-  padding: 15px;
+  margin-bottom: 24px;
+  padding: 16px;
   border: 1px solid #e0e0e0;
   font-family: 'Shadows Into Light', cursive;
 }
@@ -25,8 +25,8 @@ body {
 }
 .card {
   background-color: #ffffff;
-  margin: 20px 0;
-  padding: 20px;
+  margin: 24px 0;
+  padding: 24px;
   border: 2px solid #007bff;
   font-family: 'Shadows Into Light', cursive;
 }
