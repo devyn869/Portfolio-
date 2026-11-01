@@ -1,6 +1,14 @@
 h1 {
   color: navy;
 }
+.card-container {
+  display: flex;             /* Turns this element into a flex container */
+  flex-direction: row;       /* Arranges items in a row (default) or 'column' */
+  justify-content: space-between; /* Spreads items out horizontally */
+  align-items: center;       /* Centers items vertically */
+  gap: 24px;                 /* Adds consistent spacing between items */
+  flex-wrap: wrap;           /* Allows items to drop to the next line if space runs out */
+}
 body {
   background-color: #f5f5f5;
   color: #333333;
