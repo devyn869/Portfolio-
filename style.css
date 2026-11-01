@@ -38,3 +38,38 @@ body {
   border: 2px solid #007bff;
   font-family: 'Shadows Into Light', cursive;
 }
+/* Base styles (Mobile first - 320px and up) */
+.card-container {
+  display: flex;
+  flex-direction: column; /* Stack cards vertically on mobile */
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Tablet view (768px and up) */
+@media (min-width: 768px) {
+  .card-container {
+    flex-direction: row;     /* Switch cards to a side-by-side row */
+    flex-wrap: wrap;         /* Allow them to wrap if needed */
+    gap: 24px;
+    padding: 24px;
+  }
+  
+  .card {
+    flex: 1 1 calc(50% - 12px); /* Take up roughly half the row width minus gap */
+  }
+}
+
+/* Desktop view (1200px and up) */
+@media (min-width: 1200px) {
+  .card-container {
+    max-width: 1140px;       /* Keep content nicely centered on wide monitors */
+    margin: 0 auto;          /* Center the container */
+    gap: 32px;               /* Larger spacing for desktop */
+    padding: 32px;
+  }
+  
+  .card {
+    flex: 1 1 calc(33.333% - 21px); /* Allow up to 3 cards per row */
+  }
+}
