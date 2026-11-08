@@ -72,6 +72,12 @@ body {
   gap: 16px;
   padding: 16px;
 }
+/* Low contrast: #888888 on #FFFFFF (~3.5:1) */
+/* High contrast: #4A4A4A on #FFFFFF (~7:1) */
+p {
+  color: #2D3748; /* Standard dark grey for high legibility */
+  background-color: #FFFFFF;
+}
 
 /* Tablet view (768px and up) */
 @media (min-width: 768px) {
