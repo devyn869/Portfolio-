@@ -1,7 +1,7 @@
 h1 {
   color: #c71585;
 }
-}
+
 .card-container {
   display: flex;             /* Turns this element into a flex container */
   flex-direction: row;       /* Arranges items in a row (default) or 'column' */
@@ -50,7 +50,7 @@ body {
   font-size: 2rem;
 }
 #main-header {
-  background-color: #;ffffff
+  background-color: #ffffff;
   margin-bottom: 24px;
   padding: 16px;
   border: 1px solid #e0e0e0;
