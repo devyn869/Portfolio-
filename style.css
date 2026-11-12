@@ -17,7 +17,14 @@ h1 {
     flex-direction: column;
     gap: 12px; 
 }
-
+/* Applying a shared style to group category tags or buttons together */
+.project-tag {
+    background-color: #c71585; /* Matches your heading color */
+    color: #ffffff;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+}
 header nav ul {
     list-style: none;
     display: flex;
