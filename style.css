@@ -11,6 +11,12 @@ h1 {
   flex-wrap: wrap;           /* Allows items to drop to the next line if space runs out */
   padding: 20px;
 }
+.card {
+    /* Smaller gap inside the card keeps content closely related */
+    display: flex;
+    flex-direction: column;
+    gap: 12px; 
+}
 
 header nav ul {
     list-style: none;
