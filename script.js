@@ -13,7 +13,6 @@ function initMobileNav() {
 
   if (!menuButton || !navMenu) return;
 
-  // Ensure initial ARIA state is set
   if (!menuButton.hasAttribute("aria-expanded")) {
     menuButton.setAttribute("aria-expanded", "false");
   }
@@ -35,21 +34,25 @@ function initContactFormValidation() {
   const form = document.querySelector("#contact-form, form");
   if (!form) return;
 
-  // Disable native browser popups so custom accessible DOM errors take over
   form.setAttribute("novalidate", "");
 
-  const fields = Array.from(form.querySelectorAll("input[required], textarea[required], select[required]"));
+  const fields = Array.from(
+    form.querySelectorAll("input[required], textarea[required], select[required]")
+  );
 
   function getErrorElement(field) {
-    let errorEl = document.querySelector(`#${field.id}-error`);
+    const errorId = `${field.id || field.name}-error`;
+    let errorEl = document.querySelector(`#${errorId}`);
+
     if (!errorEl) {
       errorEl = document.createElement("span");
-      errorEl.id = `${field.id || field.name}-error`;
+      errorEl.id = errorId;
       errorEl.className = "error-message";
       errorEl.setAttribute("role", "alert");
       errorEl.setAttribute("aria-live", "polite");
       field.insertAdjacentElement("afterend", errorEl);
     }
+
     return errorEl;
   }
 
@@ -67,59 +70,40 @@ function initContactFormValidation() {
     errorEl.textContent = "";
   }
 
- function validateField(field) {
-  const value = field.value.trim();
+  function validateField(field) {
+    const value = field.value.trim();
 
-  if (field.type === "checkbox" || field.type === "radio") {
-    const group = form.querySelectorAll(`[name="${field.name}"]`);
-    const isChecked = Array.from(group).some((input) => input.checked);
-    if (!isChecked) {
-      setFieldError(field, "Please select an option.");
-      return false;
+    if (field.type === "checkbox" || field.type === "radio") {
+      const group = form.querySelectorAll(`[name="${field.name}"]`);
+      const isChecked = Array.from(group).some((input) => input.checked);
+      if (!isChecked) {
+        setFieldError(field, "Please select an option.");
+        return false;
+      }
+      clearFieldError(field);
+      return true;
     }
-    clearFieldError(field);
-    return true;
-  }
 
-  const label = field.id ? form.querySelector(`label[for="${field.id}"]`) : null;
-  const fieldName = label ? label.textContent.replace("*", "").trim() : "This field";
-
-  if (!value) {
-    setFieldError(field, `${fieldName} is required.`);
-    return false;
-  }
-
-  if (field.type === "email") {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    if (!emailPattern.test(value)) {
-      setFieldError(field, "Please enter a valid email address.");
-      return false;
-    }
-  }
-
-  if (field.type === "tel") {
-    const digitsOnly = value.replace(/\D/g, "");
-    if (digitsOnly.length < 7 || digitsOnly.length > 15) {
-      setFieldError(field, "Please enter a valid phone number.");
-      return false;
-    }
-  }
-
-  clearFieldError(field);
-  return true;
-}
+    const label = field.id ? form.querySelector(`label[for="${field.id}"]`) : null;
+    const fieldName = label ? label.textContent.replace("*", "").trim() : "This field";
 
     if (!value) {
-      const label = form.querySelector(`label[for="${field.id}"]`);
-      const fieldName = label ? label.textContent.replace("*", "").trim() : "This field";
       setFieldError(field, `${fieldName} is required.`);
       return false;
     }
 
     if (field.type === "email") {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
       if (!emailPattern.test(value)) {
         setFieldError(field, "Please enter a valid email address.");
+        return false;
+      }
+    }
+
+    if (field.type === "tel") {
+      const digitsOnly = value.replace(/\D/g, "");
+      if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+        setFieldError(field, "Please enter a valid phone number.");
         return false;
       }
     }
@@ -128,11 +112,11 @@ function initContactFormValidation() {
     return true;
   }
 
-  // Clear or update errors as the user types or changes fields
   fields.forEach((field) => {
-    const eventName = field.type === "checkbox" || field.type === "radio" || field.tagName === "SELECT"
-      ? "change"
-      : "input";
+    const eventName =
+      field.type === "checkbox" || field.type === "radio" || field.tagName === "SELECT"
+        ? "change"
+        : "input";
 
     field.addEventListener(eventName, () => {
       validateField(field);
@@ -171,7 +155,7 @@ async function initGitHubProfileCard() {
 
   const username = container.dataset.username || "devyn869";
   container.setAttribute("aria-live", "polite");
-  container.innerHTML = `<p class="status-message">Loading GitHub profile for @${username}...</p>`;
+  container.innerHTML = `<p class="status-message">Loading GitHub profile for @${escapeHTML(username)}...</p>`;
 
   try {
     const response = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}`);
@@ -182,7 +166,9 @@ async function initGitHubProfileCard() {
     const data = await response.json();
     const safeName = escapeHTML(data.name || data.login);
     const safeBio = escapeHTML(data.bio || "Front-end developer building accessible web experiences.");
-    const safeLocation = data.location ? `<p class="github-location">${escapeHTML(data.location)}</p>` : "";
+    const safeLocation = data.location
+      ? `<p class="github-location">${escapeHTML(data.location)}</p>`
+      : "";
 
     container.innerHTML = `
       <article class="github-card">
@@ -199,8 +185,8 @@ async function initGitHubProfileCard() {
           <p class="github-bio">${safeBio}</p>
           ${safeLocation}
           <p class="github-stats">
-            <strong>${data.public_repos}</strong> Public Repos &middot;
-            <strong>${data.followers}</strong> Followers
+            <strong>${escapeHTML(data.public_repos)}</strong> Public Repos &middot;
+            <strong>${escapeHTML(data.followers)}</strong> Followers
           </p>
         </div>
       </article>
