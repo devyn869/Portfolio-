@@ -1,50 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <title>Projects - My Portfolio</title>
-    <link rel="stylesheet" href="style.css"> 
-    
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
-    
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Projects - My Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
 </head>
 <body>
-    <script src="script.js" defer></script>
-   <img src="Under_Construction.jpeg" alt="Under Construction graphic indicating page is being built">
-    <header>
-        <h1>My Portfolio</h1>
-        <nav>
-            <ul>
-                <li><a href="Index.html">Home</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>My Projects</h2>
-            <p>Here are some of the web development projects I am building.</p>
-<!-- Parent container with your flexbox class -->
-    <div class="card-container">
-      <div class="card">
-        <h3>Project One</h3>
-        <p>Description of my first web project.</p>
+  <header>
+    <h1>My Portfolio</h1>
+    <button
+      type="button"
+      class="menu-toggle"
+      aria-expanded="false"
+      aria-controls="projects-nav"
+      aria-label="Toggle navigation menu"
+    >
+      Menu
+    </button>
+    <nav id="projects-nav" aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="Index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>My Projects</h2>
+      <p>Here are some of the web development projects I am building.</p>
+
+      <div class="filter-controls" role="group" aria-label="Filter projects by category">
+        <button type="button" class="filter-btn is-active" data-filter="all">All</button>
+        <button type="button" class="filter-btn" data-filter="web">Web</button>
+        <button type="button" class="filter-btn" data-filter="ui">UI</button>
       </div>
-      <div class="card">
-        <h3>Project Two</h3>
-        <p>Description of my second web project.</p>
+
+      <!-- Parent container with your flexbox class -->
+      <div class="card-container">
+        <div class="card" data-category="web">
+          <h3>Project One</h3>
+          <p>Description of my first web project.</p>
+        </div>
+        <div class="card" data-category="ui">
+          <h3>Project Two</h3>
+          <p>Description of my second web project.</p>
+        </div>
       </div>
-    </div>
-  </section>
-</main>      
-    <footer>
-        <p>&copy; 2026 Devyn. Check out the source code: 
-        <a href="https://github.com/devyn869/Portfolio-" aria-label="View Portfolio Repository">Portfolio Repository</a>
-    </p>
-    </footer>
+
+      <img src="Under_Construction.jpeg" alt="Under Construction graphic indicating page is being built">
+    </section>
+
+    <section id="github-profile-card" data-username="devyn869" aria-label="GitHub profile"></section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Devyn. Check out the source code: <a href="https://github.com/devyn869/Portfolio-" aria-label="View Portfolio Repository">Portfolio Repository</a></p>
+  </footer>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
