@@ -67,19 +67,47 @@ function initContactFormValidation() {
     errorEl.textContent = "";
   }
 
-  function validateField(field) {
-    const value = field.value.trim();
+ function validateField(field) {
+  const value = field.value.trim();
 
-    if (field.type === "checkbox" || field.type === "radio") {
-      const group = form.querySelectorAll(`[name="${field.name}"]`);
-      const isChecked = Array.from(group).some((input) => input.checked);
-      if (!isChecked) {
-        setFieldError(field, "Please select an option.");
-        return false;
-      }
-      clearFieldError(field);
-      return true;
+  if (field.type === "checkbox" || field.type === "radio") {
+    const group = form.querySelectorAll(`[name="${field.name}"]`);
+    const isChecked = Array.from(group).some((input) => input.checked);
+    if (!isChecked) {
+      setFieldError(field, "Please select an option.");
+      return false;
     }
+    clearFieldError(field);
+    return true;
+  }
+
+  const label = field.id ? form.querySelector(`label[for="${field.id}"]`) : null;
+  const fieldName = label ? label.textContent.replace("*", "").trim() : "This field";
+
+  if (!value) {
+    setFieldError(field, `${fieldName} is required.`);
+    return false;
+  }
+
+  if (field.type === "email") {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailPattern.test(value)) {
+      setFieldError(field, "Please enter a valid email address.");
+      return false;
+    }
+  }
+
+  if (field.type === "tel") {
+    const digitsOnly = value.replace(/\D/g, "");
+    if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+      setFieldError(field, "Please enter a valid phone number.");
+      return false;
+    }
+  }
+
+  clearFieldError(field);
+  return true;
+}
 
     if (!value) {
       const label = form.querySelector(`label[for="${field.id}"]`);
