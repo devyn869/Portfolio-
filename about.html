@@ -1,38 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <title>About - My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>About - My Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
 </head>
 <body>
-    <script src="script.js" defer></script>
-    <header>
-        <h1>My Portfolio</h1>
-        <nav>
-            <ul>
-                <li><a href="Index.html">Home</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>About Me</h2>
-            <p>Learn more about my background, interests, and goals in tech.</p>
-        </section>
-    </main>
+  <header>
+    <h1>My Portfolio</h1>
+    <button
+      type="button"
+      class="menu-toggle"
+      aria-expanded="false"
+      aria-controls="about-nav"
+      aria-label="Toggle navigation menu"
+    >
+      Menu
+    </button>
+    <nav id="about-nav" aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="Index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <footer>
-      <a href="Contact.html" class="btn">Get in Touch</a>
-      <p>&copy; 2026 Devyn. Check out the source code: 
-        <a href="https://github.com/devyn869/Portfolio-" aria-label="View Portfolio Repository">Portfolio Repository</a>
-      </p>
-    </footer>
-  </body>
+  <main>
+    <section>
+      <h2>About Me</h2>
+      <p>Learn more about my background, interests, and goals in tech.</p>
+    </section>
+
+    <section id="github-profile-card" data-username="devyn869" aria-label="GitHub profile"></section>
+  </main>
+
+  <footer>
+    <a href="Contact.html" class="btn">Get in Touch</a>
+    <p>&copy; 2026 Devyn. Check out the source code: <a href="https://github.com/devyn869/Portfolio-" aria-label="View Portfolio Repository">Portfolio Repository</a></p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
 </html>
