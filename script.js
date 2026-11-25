@@ -207,3 +207,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+const removeBtn = document.createElement("button");
+removeBtn.type = "button";
+removeBtn.textContent = "Remove";
+removeBtn.addEventListener("click", () => {
+  li.remove();
+});
+
+li.appendChild(labelSpan);
+li.appendChild(removeBtn);
+itemList.appendChild(li);
