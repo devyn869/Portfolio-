@@ -291,8 +291,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-    labelSpan.textContent = value;
-
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
     deleteButton.textContent = "Remove";
