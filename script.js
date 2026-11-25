@@ -166,6 +166,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const toggleDetailsBtn = document.querySelector("#toggle-details-btn");
+  const extraContactInfo = document.querySelector("#extra-contact-info");
+
+  if (toggleDetailsBtn && extraContactInfo) {
+    toggleDetailsBtn.addEventListener("click", () => {
+      const isHidden = extraContactInfo.hidden;
+      extraContactInfo.hidden = !isHidden;
+      toggleDetailsBtn.setAttribute("aria-expanded", String(isHidden));
+      toggleDetailsBtn.textContent = isHidden
+        ? "Hide Response Time & Direct Info"
+        : "Show Response Time & Direct Info";
+    });
+  }
+
   const styleInput = document.querySelector("#style-input");
   const styleTarget = document.querySelector("#style-target");
 
