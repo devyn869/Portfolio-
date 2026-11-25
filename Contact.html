@@ -6,14 +6,14 @@
   <title>Contact Me</title>
   <style>
     :root {
-   --bg-color: #0f172a;     /* Navy page background */
-  --card-bg: #ffffff;      /* Crisp white form card */
-  --input-bg: #f8fafc;     /* Soft off-white field background */
-  --text-color: #0f172a;   /* High-contrast dark ink on light surfaces */
-  --accent-color: #c71585; /* Signature magenta accent */
-  --focus-color: #38bdf8;  /* Bright sky-blue focus & highlight */
-  --border-color: #cbd5e1; /* Clean neutral border */
-  --error-color: #b91c1c;  /* High-contrast crimson error text on light card */
+      --bg-color: #0f172a;     /* Navy page background */
+      --card-bg: #ffffff;      /* Crisp white form card */
+      --input-bg: #f8fafc;     /* Soft off-white field background */
+      --text-color: #0f172a;   /* High-contrast dark ink on light surfaces */
+      --accent-color: #c71585; /* Signature magenta accent */
+      --focus-color: #38bdf8;  /* Bright sky-blue focus & highlight */
+      --border-color: #cbd5e1; /* Clean neutral border */
+      --error-color: #b91c1c;  /* High-contrast crimson error text on light card */
     }
 
     body {
@@ -50,29 +50,19 @@
     textarea {
       width: 100%;
       padding: 0.75rem;
-      background-color: var(--bg-color);
+      background-color: var(--input-bg);
       border: 1px solid var(--border-color);
       border-radius: 4px;
       color: var(--text-color);
       font-size: 1rem;
       box-sizing: border-box;
     }
-  .btn-primary {
-  background-color: var(--accent-color);
-  color: #ffffff;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-  transition: opacity 0.2s ease;
-}
+
     input:focus,
     textarea:focus {
       outline: none;
       border-color: var(--accent-color);
-      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
     }
 
     fieldset.form-group {
@@ -84,6 +74,7 @@
     legend {
       padding: 0 0.5rem;
       font-weight: 500;
+      color: var(--text-color);
     }
 
     .radio-option {
@@ -114,7 +105,7 @@
 
     .btn-primary {
       background-color: var(--accent-color);
-      color: #0f172a;
+      color: #ffffff;
       padding: 0.75rem 1.5rem;
       border: none;
       border-radius: 4px;
