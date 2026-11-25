@@ -256,3 +256,32 @@ if (styleInput && styleTarget) {
     styleTarget.classList.toggle("is-complete", typedLength >= 8);
   });
 }
+const listForm = document.querySelector("#dynamic-list-form");
+const listInput = document.querySelector("#dynamic-list-input");
+const itemList = document.querySelector("#dynamic-item-list");
+
+if (listForm && listInput && itemList) {
+  listForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const value = listInput.value.trim();
+    if (!value) return;
+
+    const li = document.createElement("li");
+    const labelSpan = document.createElement("span");
+    labelSpan.textContent = value;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.textContent = "Remove";
+    deleteButton.addEventListener("click", () => {
+      li.remove();
+    });
+
+    li.appendChild(labelSpan);
+    li.appendChild(deleteButton);
+    itemList.appendChild(li);
+
+    listInput.value = "";
+    listInput.focus();
+  });
+}
