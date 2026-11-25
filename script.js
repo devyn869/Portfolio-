@@ -1,125 +1,81 @@
-document.addEventListener("DOMContentLoaded", () => {
-  initMobileNav();
-  initContactFormValidation();
-  initGitHubProfileCard();
-});
+function escapeHTML(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
 
-/**
- * 1. DOM Interaction: Mobile Hamburger Navigation Toggle
- */
 function initMobileNav() {
-  const menuButton = document.querySelector(".menu-toggle, [data-menu-toggle], button[aria-expanded]");
-  const navMenu = document.querySelector(".nav-links, .nav-menu, nav ul");
+  const navToggle = document.querySelector("[data-nav-toggle]");
+  const navMenu = document.querySelector("[data-nav-menu]");
 
-  if (!menuButton || !navMenu) return;
+  if (!navToggle || !navMenu) return;
 
-  if (!menuButton.hasAttribute("aria-expanded")) {
-    menuButton.setAttribute("aria-expanded", "false");
-  }
-
-  menuButton.addEventListener("click", () => {
-    const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
-    const nextState = !isExpanded;
-
-    menuButton.setAttribute("aria-expanded", String(nextState));
-    navMenu.classList.toggle("is-open", nextState);
-    menuButton.classList.toggle("is-active", nextState);
+  navToggle.addEventListener("click", () => {
+    const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
+    navToggle.setAttribute("aria-expanded", String(!isExpanded));
+    navMenu.classList.toggle("is-open", !isExpanded);
   });
 }
 
-/**
- * 2. Form Validation: Accessible Contact Form Validation
- */
 function initContactFormValidation() {
-  const form = document.querySelector("#contact-form, form");
+  const form = document.querySelector("#contact-form");
   if (!form) return;
 
-  form.setAttribute("novalidate", "");
+  const fields = Array.from(form.querySelectorAll("input, textarea, select"));
 
-  const fields = Array.from(
-    form.querySelectorAll("input[required], textarea[required], select[required]")
-  );
-
-  function getErrorElement(field) {
-    const errorId = `${field.id || field.name}-error`;
-    let errorEl = document.querySelector(`#${errorId}`);
-
-    if (!errorEl) {
-      errorEl = document.createElement("span");
-      errorEl.id = errorId;
-      errorEl.className = "error-message";
-      errorEl.setAttribute("role", "alert");
-      errorEl.setAttribute("aria-live", "polite");
-      field.insertAdjacentElement("afterend", errorEl);
-    }
-
-    return errorEl;
-  }
-
-  function setFieldError(field, message) {
-    const errorEl = getErrorElement(field);
+  function showError(field, message) {
+    const errorEl =
+      field.parentElement?.querySelector(".error-message") ||
+      document.querySelector(`#${field.id}-error`);
     field.setAttribute("aria-invalid", "true");
-    field.classList.add("input-error");
-    errorEl.textContent = message;
+    if (errorEl) {
+      errorEl.textContent = message;
+    }
   }
 
-  function clearFieldError(field) {
-    const errorEl = getErrorElement(field);
-    field.setAttribute("aria-invalid", "false");
-    field.classList.remove("input-error");
-    errorEl.textContent = "";
+  function clearError(field) {
+    const errorEl =
+      field.parentElement?.querySelector(".error-message") ||
+      document.querySelector(`#${field.id}-error`);
+    field.removeAttribute("aria-invalid");
+    if (errorEl) {
+      errorEl.textContent = "";
+    }
   }
 
   function validateField(field) {
     const value = field.value.trim();
 
-    if (field.type === "checkbox" || field.type === "radio") {
-      const group = form.querySelectorAll(`[name="${field.name}"]`);
-      const isChecked = Array.from(group).some((input) => input.checked);
-      if (!isChecked) {
-        setFieldError(field, "Please select an option.");
-        return false;
-      }
-      clearFieldError(field);
-      return true;
-    }
-
-    const label = field.id ? form.querySelector(`label[for="${field.id}"]`) : null;
-    const fieldName = label ? label.textContent.replace("*", "").trim() : "This field";
-
-    if (!value) {
-      setFieldError(field, `${fieldName} is required.`);
+    if (field.hasAttribute("required") && !value) {
+      showError(field, "This field is required.");
       return false;
     }
 
-    if (field.type === "email") {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (field.type === "email" && value) {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(value)) {
-        setFieldError(field, "Please enter a valid email address.");
+        showError(field, "Please enter a valid email address.");
         return false;
       }
     }
 
-    if (field.type === "tel") {
-      const digitsOnly = value.replace(/\D/g, "");
-      if (digitsOnly.length < 7 || digitsOnly.length > 15) {
-        setFieldError(field, "Please enter a valid phone number.");
-        return false;
-      }
+    if (field.minLength > 0 && value && value.length < field.minLength) {
+      showError(field, `Please enter at least ${field.minLength} characters.`);
+      return false;
     }
 
-    clearFieldError(field);
+    clearError(field);
     return true;
   }
 
   fields.forEach((field) => {
-    const eventName =
-      field.type === "checkbox" || field.type === "radio" || field.tagName === "SELECT"
-        ? "change"
-        : "input";
-
-    field.addEventListener(eventName, () => {
-      validateField(field);
+    ["input", "blur"].forEach((eventName) => {
+      field.addEventListener(eventName, () => {
+        validateField(field);
+      });
     });
   });
 
@@ -146,9 +102,6 @@ function initContactFormValidation() {
   });
 }
 
-/**
- * 3. API Fetch (Bonus): GitHub Profile Card with Error Handling
- */
 async function initGitHubProfileCard() {
   const container = document.querySelector("#github-profile-card");
   if (!container) return;
@@ -172,13 +125,7 @@ async function initGitHubProfileCard() {
 
     container.innerHTML = `
       <article class="github-card">
-        <img
-          src="${escapeHTML(data.avatar_url)}"
-          alt="Avatar for ${safeName}"
-          class="github-avatar"
-          width="72"
-          height="72"
-        />
+        <img src="${escapeHTML(data.avatar_url)}" alt="Avatar for ${safeName}" class="github-avatar" width="72" height="72" />
         <div class="github-details">
           <h3><a href="${escapeHTML(data.html_url)}" target="_blank" rel="noopener noreferrer">${safeName}</a></h3>
           <p class="github-handle">@${escapeHTML(data.login)}</p>
@@ -191,7 +138,7 @@ async function initGitHubProfileCard() {
         </div>
       </article>
     `;
-    { catch (error) }
+  } catch (error) {
     container.innerHTML = `
       <div class="github-error" role="alert">
         <p>Unable to load GitHub profile right now.</p>
@@ -199,43 +146,12 @@ async function initGitHubProfileCard() {
       </div>
     `;
   }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  function escapeHTML(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#39;");
-  }
-
-  const highlightBtn = document.querySelector("#highlight-status-btn");
-  const statusText = document.querySelector("#highlight-status-text");
-
-  if (highlightBtn && statusText) {
-    highlightBtn.addEventListener("click", () => {
-      const isFeatured = statusText.dataset.featured === "true";
-      statusText.dataset.featured = String(!isFeatured);
-      statusText.textContent = !isFeatured
-        ? "Currently highlighting: Interactive DOM & Accessibility projects"
-        : "Showing all portfolio highlights";
-    });
-  }
-
-  const liveStyleInput = document.querySelector("#live-preview-input");
-  const liveStylePreview = document.querySelector("#live-preview-badge");
-
-  if (liveStyleInput && liveStylePreview) {
-    liveStyleInput.addEventListener("input", () => {
-      const length = liveStyleInput.value.trim().length;
-      liveStylePreview.classList.toggle("is-active-typing", length > 0);
-      liveStylePreview.classList.toggle("is-ready", length >= 5);
-      liveStylePreview.textContent =
-        length === 0
-          ? "Waiting for input..."
-          : `${length} character${length === 1 ? "" : "s"} typed`;
-    });
-  }
+  initMobileNav();
+  initContactFormValidation();
+  initGitHubProfileCard();
 
   const highlightButton = document.querySelector("#highlight-btn");
   const highlightOutput = document.querySelector("#highlight-output");
@@ -290,5 +206,4 @@ document.addEventListener("DOMContentLoaded", () => {
       listInput.focus();
     });
   }
-
-  
+});
