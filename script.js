@@ -191,7 +191,7 @@ async function initGitHubProfileCard() {
         </div>
       </article>
     `;
-  } catch (error) {
+    { catch (error) }
     container.innerHTML = `
       <div class="github-error" role="alert">
         <p>Unable to load GitHub profile right now.</p>
