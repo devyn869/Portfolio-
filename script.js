@@ -290,19 +290,5 @@ document.addEventListener("DOMContentLoaded", () => {
       listInput.focus();
     });
   }
-});
-    const deleteButton = document.createElement("button");
-    deleteButton.type = "button";
-    deleteButton.textContent = "Remove";
-    deleteButton.addEventListener("click", () => {
-      li.remove();
-    });
 
-    li.appendChild(labelSpan);
-    li.appendChild(deleteButton);
-    itemList.appendChild(li);
-
-    listInput.value = "";
-    listInput.focus();
-  });
-}
+  
