@@ -199,75 +199,98 @@ async function initGitHubProfileCard() {
       </div>
     `;
   }
-}
+document.addEventListener("DOMContentLoaded", () => {
+  function escapeHTML(str) {
+    return String(str)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
 
-function escapeHTML(str) {
-  return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-const highlightBtn = document.querySelector("#highlight-status-btn");
-const statusText = document.querySelector("#highlight-status-text");
+  const highlightBtn = document.querySelector("#highlight-status-btn");
+  const statusText = document.querySelector("#highlight-status-text");
 
-if (highlightBtn && statusText) {
-  highlightBtn.addEventListener("click", () => {
-    const isFeatured = statusText.dataset.featured === "true";
-    statusText.dataset.featured = String(!isFeatured);
-    statusText.textContent = !isFeatured
-      ? "Currently highlighting: Interactive DOM & Accessibility projects"
-      : "Showing all portfolio highlights";
-  });
-const liveStyleInput = document.querySelector("#live-preview-input");
-const liveStylePreview = document.querySelector("#live-preview-badge");
+  if (highlightBtn && statusText) {
+    highlightBtn.addEventListener("click", () => {
+      const isFeatured = statusText.dataset.featured === "true";
+      statusText.dataset.featured = String(!isFeatured);
+      statusText.textContent = !isFeatured
+        ? "Currently highlighting: Interactive DOM & Accessibility projects"
+        : "Showing all portfolio highlights";
+    });
+  }
 
-if (liveStyleInput && liveStylePreview) {
-  liveStyleInput.addEventListener("input", () => {
-    const length = liveStyleInput.value.trim().length;
-    liveStylePreview.classList.toggle("is-active-typing", length > 0);
-    liveStylePreview.classList.toggle("is-ready", length >= 5);
-    liveStylePreview.textContent =
-      length === 0
-        ? "Waiting for input..."
-        : `${length} character${length === 1 ? "" : "s"} typed`;
-  });
-}
-const highlightButton = document.querySelector("#highlight-btn");
-const highlightOutput = document.querySelector("#highlight-output");
+  const liveStyleInput = document.querySelector("#live-preview-input");
+  const liveStylePreview = document.querySelector("#live-preview-badge");
 
-if (highlightButton && highlightOutput) {
-  highlightButton.addEventListener("click", () => {
-    const isExpanded = highlightButton.getAttribute("aria-expanded") === "true";
-    highlightButton.setAttribute("aria-expanded", String(!isExpanded));
-    highlightOutput.textContent = isExpanded
-      ? "Click the button to highlight featured work."
-      : "Featured: Accessible design, responsive layouts, and interactive JS.";
-  });
-}
-const styleInput = document.querySelector("#style-input");
-const styleTarget = document.querySelector("#style-target");
+  if (liveStyleInput && liveStylePreview) {
+    liveStyleInput.addEventListener("input", () => {
+      const length = liveStyleInput.value.trim().length;
+      liveStylePreview.classList.toggle("is-active-typing", length > 0);
+      liveStylePreview.classList.toggle("is-ready", length >= 5);
+      liveStylePreview.textContent =
+        length === 0
+          ? "Waiting for input..."
+          : `${length} character${length === 1 ? "" : "s"} typed`;
+    });
+  }
 
-if (styleInput && styleTarget) {
-  styleInput.addEventListener("input", () => {
-    const typedLength = styleInput.value.trim().length;
-    styleTarget.classList.toggle("is-typing", typedLength > 0);
-    styleTarget.classList.toggle("is-complete", typedLength >= 8);
-  });
-}
-const listForm = document.querySelector("#dynamic-list-form");
-const listInput = document.querySelector("#dynamic-list-input");
-const itemList = document.querySelector("#dynamic-item-list");
+  const highlightButton = document.querySelector("#highlight-btn");
+  const highlightOutput = document.querySelector("#highlight-output");
 
-if (listForm && listInput && itemList) {
-  listForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const value = listInput.value.trim();
-    if (!value) return;
+  if (highlightButton && highlightOutput) {
+    highlightButton.addEventListener("click", () => {
+      const isExpanded = highlightButton.getAttribute("aria-expanded") === "true";
+      highlightButton.setAttribute("aria-expanded", String(!isExpanded));
+      highlightOutput.textContent = isExpanded
+        ? "Click the button to highlight featured work."
+        : "Featured: Accessible design, responsive layouts, and interactive JS.";
+    });
+  }
 
-    const li = document.createElement("li");
-    const labelSpan = document.createElement("span");
+  const styleInput = document.querySelector("#style-input");
+  const styleTarget = document.querySelector("#style-target");
+
+  if (styleInput && styleTarget) {
+    styleInput.addEventListener("input", () => {
+      const typedLength = styleInput.value.trim().length;
+      styleTarget.classList.toggle("is-typing", typedLength > 0);
+      styleTarget.classList.toggle("is-complete", typedLength >= 8);
+    });
+  }
+
+  const listForm = document.querySelector("#dynamic-list-form");
+  const listInput = document.querySelector("#dynamic-list-input");
+  const itemList = document.querySelector("#dynamic-item-list");
+
+  if (listForm && listInput && itemList) {
+    listForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const value = listInput.value.trim();
+      if (!value) return;
+
+      const li = document.createElement("li");
+      const labelSpan = document.createElement("span");
+      labelSpan.textContent = value;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.textContent = "Remove";
+      removeBtn.addEventListener("click", () => {
+        li.remove();
+      });
+
+      li.appendChild(labelSpan);
+      li.appendChild(removeBtn);
+      itemList.appendChild(li);
+
+      listInput.value = "";
+      listInput.focus();
+    });
+  }
+});
     labelSpan.textContent = value;
 
     const deleteButton = document.createElement("button");
