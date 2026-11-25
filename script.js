@@ -246,3 +246,13 @@ if (highlightButton && highlightOutput) {
       : "Featured: Accessible design, responsive layouts, and interactive JS.";
   });
 }
+const styleInput = document.querySelector("#style-input");
+const styleTarget = document.querySelector("#style-target");
+
+if (styleInput && styleTarget) {
+  styleInput.addEventListener("input", () => {
+    const typedLength = styleInput.value.trim().length;
+    styleTarget.classList.toggle("is-typing", typedLength > 0);
+    styleTarget.classList.toggle("is-complete", typedLength >= 8);
+  });
+}
