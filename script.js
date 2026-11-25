@@ -209,3 +209,28 @@ function escapeHTML(str) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 }
+const highlightBtn = document.querySelector("#highlight-status-btn");
+const statusText = document.querySelector("#highlight-status-text");
+
+if (highlightBtn && statusText) {
+  highlightBtn.addEventListener("click", () => {
+    const isFeatured = statusText.dataset.featured === "true";
+    statusText.dataset.featured = String(!isFeatured);
+    statusText.textContent = !isFeatured
+      ? "Currently highlighting: Interactive DOM & Accessibility projects"
+      : "Showing all portfolio highlights";
+  });
+const liveStyleInput = document.querySelector("#live-preview-input");
+const liveStylePreview = document.querySelector("#live-preview-badge");
+
+if (liveStyleInput && liveStylePreview) {
+  liveStyleInput.addEventListener("input", () => {
+    const length = liveStyleInput.value.trim().length;
+    liveStylePreview.classList.toggle("is-active-typing", length > 0);
+    liveStylePreview.classList.toggle("is-ready", length >= 5);
+    liveStylePreview.textContent =
+      length === 0
+        ? "Waiting for input..."
+        : `${length} character${length === 1 ? "" : "s"} typed`;
+  });
+}
