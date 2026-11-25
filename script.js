@@ -234,3 +234,15 @@ if (liveStyleInput && liveStylePreview) {
         : `${length} character${length === 1 ? "" : "s"} typed`;
   });
 }
+const highlightButton = document.querySelector("#highlight-btn");
+const highlightOutput = document.querySelector("#highlight-output");
+
+if (highlightButton && highlightOutput) {
+  highlightButton.addEventListener("click", () => {
+    const isExpanded = highlightButton.getAttribute("aria-expanded") === "true";
+    highlightButton.setAttribute("aria-expanded", String(!isExpanded));
+    highlightOutput.textContent = isExpanded
+      ? "Click the button to highlight featured work."
+      : "Featured: Accessible design, responsive layouts, and interactive JS.";
+  });
+}
