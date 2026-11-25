@@ -122,6 +122,26 @@
 </head>
 <body>
   <form id="contact-form" action="#" method="POST" novalidate>
+    <div style="max-width: 600px; margin: 0 auto 1rem;">
+  <button
+    type="button"
+    id="toggle-details-btn"
+    class="btn-primary"
+    aria-expanded="false"
+    aria-controls="extra-contact-info"
+  >
+    Show Response Time &amp; Direct Info
+  </button>
+
+  <section
+    id="extra-contact-info"
+    hidden
+    style="background: #ffffff; color: #0f172a; padding: 1rem; border-radius: 8px; margin-top: 0.75rem;"
+  >
+    <p style="margin: 0 0 0.5rem;"><strong>Typical reply time:</strong> Within 1–2 business days.</p>
+    <p style="margin: 0;"><strong>Preferred channel:</strong> Use the form below for project inquiries.</p>
+  </section>
+</div>
     <!-- Standard Text Input with Explicit Label Binding -->
     <div class="form-group">
       <label for="name">Full Name</label>
