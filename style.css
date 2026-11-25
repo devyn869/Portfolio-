@@ -149,3 +149,11 @@ p {
   background-color: #f0fdf4;
   color: #14532d;
 }
+.is-typing {
+  border-color: #2563eb;
+}
+
+.is-complete {
+  border-color: #15803d;
+  background-color: #f0fdf4;
+}
